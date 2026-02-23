@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionnaire d'Identifiants</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; }
+        .header { background: #1B4F72; color: white; padding: 20px; text-align: center; }
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+        .card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #1B4F72; margin-bottom: 15px; }
+        input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #2E86C1; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%; }
+        button:hover { background: #1B4F72; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #1B4F72; color: white; padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #ddd; }
+        tr:hover { background: #f5f5f5; }
+        .delete { background: #e74c3c; color: white; padding: 5px 10px; border-radius: 4px; text-decoration: none; font-size: 12px; }
+        .delete:hover { background: #c0392b; }
+        .password { filter: blur(4px); cursor: pointer; }
+        .password:hover { filter: none; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔐 Gestionnaire d'Identifiants</h1>
+        <p>Stockez et gérez vos identifiants en sécurité</p>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h2>Ajouter un identifiant</h2>
+            <form action="/add" method="POST">
+                <input type="text" name="site" placeholder="Site web (ex: github.com)" required>
+                <input type="text" name="login" placeholder="Login / Email" required>
+                <input type="password" name="password" placeholder="Mot de passe" required>
+                <button type="submit">➕ Ajouter</button>
+            </form>
+        </div>
+        <div class="card">
+            <h2>Mes identifiants ({{ items|length }})</h2>
+            <table>
+                <tr>
+                    <th>Site</th>
+                    <th>Login</th>
+                    <th>Mot de passe</th>
+                    <th>Action</th>
+                </tr>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item[1] }}</td>
+                    <td>{{ item[2] }}</td>
+                    <td class="password" title="Cliquez pour afficher">{{ item[3] }}</td>
+                    <td><a href="/delete/{{ item[0] }}" class="delete" onclick="return confirm('Supprimer ?')">🗑 Supprimer</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>

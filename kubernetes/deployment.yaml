@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gestion-identifiants
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gestion-identifiants
+  template:
+    metadata:
+      labels:
+        app: gestion-identifiants
+    spec:
+      containers:
+      - name: gestion-identifiants
+        image: sankara973/gestion-identifiants:v3
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gestion-identifiants
+spec:
+  selector:
+    app: gestion-identifiants
+  ports:
+  - port: 80
+    targetPort: 5000
+  type: LoadBalancer
