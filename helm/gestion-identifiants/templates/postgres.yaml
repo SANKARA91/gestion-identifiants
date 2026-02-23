@@ -7,7 +7,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: {{ .Values.postgres.storage }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -25,14 +25,14 @@ spec:
     spec:
       containers:
       - name: postgres
-        image: postgres:15
+        image: {{ .Values.postgres.image }}
         env:
         - name: POSTGRES_DB
-          value: identifiants
+          value: {{ .Values.postgres.database }}
         - name: POSTGRES_USER
-          value: admin
+          value: {{ .Values.postgres.user }}
         - name: POSTGRES_PASSWORD
-          value: password123
+          value: {{ .Values.postgres.password }}
         ports:
         - containerPort: 5432
         volumeMounts:

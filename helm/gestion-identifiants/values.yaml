@@ -1,0 +1,22 @@
+# Application
+app:
+  name: gestion-identifiants
+  image:
+    repository: sankara973/gestion-identifiants
+    tag: latest
+    pullPolicy: Always
+  port: 5000
+  replicas: 1
+
+# Service
+service:
+  type: LoadBalancer
+  port: 80
+
+# PostgreSQL
+postgres:
+  image: postgres:15
+  database: identifiants
+  user: admin
+  password: password123
+  storage: 1Gi
